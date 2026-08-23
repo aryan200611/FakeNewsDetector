@@ -1,0 +1,294 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --paper: #E7E0C9;
+  --paper-dark: #DAD1B4;
+  --ink: #201E19;
+  --ink-soft: #4B463C;
+  --muted: #8A8168;
+  --amber: #B9791F;
+  --wire-red: #A2382A;
+  --wire-green: #2C6B54;
+  --rule: rgba(32,30,25,0.18);
+}
+
+* { box-sizing: border-box; }
+
+.sp-root {
+  font-family: 'IBM Plex Mono', monospace;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100%;
+  padding: 28px 18px 48px;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(32,30,25,0.025) 0px, rgba(32,30,25,0.025) 1px, transparent 1px, transparent 3px);
+}
+
+.sp-shell { max-width: 960px; margin: 0 auto; }
+
+/* Masthead */
+.sp-masthead { text-align: center; padding-bottom: 16px; margin-bottom: 26px; border-bottom: 3px double var(--ink); }
+.sp-kicker { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.sp-title { font-family: 'Special Elite', monospace; font-size: 40px; letter-spacing: 0.03em; margin: 2px 0 8px; color: var(--ink); }
+.sp-sub { font-size: 12.5px; color: var(--ink-soft); max-width: 560px; margin: 0 auto; line-height: 1.5; }
+
+/* Grid */
+.sp-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 22px; align-items: start; }
+@media (max-width: 760px) { .sp-grid { grid-template-columns: 1fr; } }
+
+/* Input panel */
+.sp-input-panel {
+  background: var(--paper-dark);
+  border: 1px solid var(--rule);
+  padding: 18px;
+}
+.sp-panel-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; display:flex; justify-content:space-between; align-items:center;}
+.sp-textarea {
+  width: 100%; min-height: 220px; resize: vertical;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13.5px; line-height: 1.6; color: var(--ink);
+  padding: 12px; outline: none;
+}
+.sp-textarea:focus { border-color: var(--amber); }
+.sp-textarea::placeholder { color: var(--muted); }
+
+.sp-examples { display:flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.sp-example-btn {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.03em;
+  background: transparent; border: 1px solid var(--rule); color: var(--ink-soft);
+  padding: 6px 10px; cursor: pointer; transition: all .15s ease;
+}
+.sp-example-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+.sp-analyze-row { display:flex; align-items:center; gap: 14px; margin-top: 14px; }
+.sp-analyze-btn {
+  font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 13px; letter-spacing: 0.12em;
+  text-transform: uppercase; background: var(--ink); color: var(--paper);
+  border: none; padding: 12px 20px; cursor: pointer; transition: background .15s ease;
+}
+.sp-analyze-btn:hover { background: var(--amber); }
+.sp-analyze-btn:disabled { opacity: 0.5; cursor: default; }
+.sp-charcount { font-size: 11px; color: var(--muted); }
+
+/* Readout panel */
+.sp-readout {
+  background: var(--ink); color: var(--paper);
+  padding: 22px 20px 20px; position: relative;
+  min-height: 360px;
+}
+.sp-readout::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 8px;
+  background-image: linear-gradient(135deg, var(--paper) 25%, transparent 25%), linear-gradient(225deg, var(--paper) 25%, transparent 25%);
+  background-size: 12px 12px; background-position: 0 0;
+}
+.sp-readout-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #9C9581; margin: 10px 0 18px; }
+
+.sp-verdict-empty { color: #746E5E; font-size: 13px; line-height: 1.7; padding: 30px 0; text-align: center; }
+.sp-verdict-empty .sp-glyph { font-size: 26px; display:block; margin-bottom: 10px; opacity: .6;}
+
+.sp-verdict-word { font-family: 'Special Elite', monospace; font-size: 34px; letter-spacing: 0.03em; margin-bottom: 4px; }
+.sp-verdict-word.fake { color: #E2A896; }
+.sp-verdict-word.real { color: #A9D9C4; }
+.sp-verdict-conf { font-size: 12px; color: #B8B19E; margin-bottom: 18px; }
+
+/* Gauge */
+.sp-gauge-wrap { margin: 18px 0 22px; }
+.sp-gauge-labels { display:flex; justify-content: space-between; font-size: 10.5px; letter-spacing:0.08em; color: #9C9581; margin-bottom: 6px; }
+.sp-gauge-track { position: relative; height: 10px; background: linear-gradient(90deg, var(--wire-green), #7A7657 50%, var(--wire-red)); }
+.sp-gauge-ticks { display:flex; justify-content: space-between; margin-top: 4px; }
+.sp-gauge-ticks span { width:1px; height: 5px; background: #6B6552; }
+.sp-needle {
+  position: absolute; top: -6px; width: 2px; height: 22px; background: var(--paper);
+  box-shadow: 0 0 0 1px var(--ink);
+  transition: left 0.5s cubic-bezier(.2,.8,.2,1);
+}
+
+/* Contribution terms */
+.sp-terms { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+.sp-terms-col-label { font-size: 10px; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:8px; }
+.sp-terms-col-label.fake { color: #E2A896; }
+.sp-terms-col-label.real { color: #A9D9C4; }
+.sp-chip-list { display:flex; flex-wrap: wrap; gap: 6px; }
+.sp-chip {
+  font-size: 11px; padding: 4px 8px; border: 1px solid #4A4738; color: #D7D2C1;
+  background: rgba(255,255,255,0.03);
+}
+
+/* Disclaimer */
+.sp-disclaimer {
+  margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule);
+  font-size: 11px; color: var(--muted); line-height: 1.7;
+}
+.sp-disclaimer b { color: var(--ink-soft); }
+
+.sp-footer-note { text-align:center; font-size: 10.5px; color: var(--muted); margin-top: 22px; letter-spacing: 0.04em; }
+</style>
+
+<div class="sp-root">
+  <div class="sp-shell">
+    <div class="sp-masthead">
+      <div class="sp-kicker">Stylistic Fingerprint Instrument &middot; No. 1</div>
+      <div class="sp-title">STYLEPRINT</div>
+      <div class="sp-sub">Reads the writing style of a news article and compares it against patterns learned from ~39,000 labeled articles. It detects <b>how</b> something is written, not whether it's <b>true</b> &mdash; see the fine print below.</div>
+    </div>
+
+    <div class="sp-grid">
+      <div class="sp-input-panel">
+        <div class="sp-panel-label"><span>Input Copy</span><span class="sp-charcount" id="charcount">0 characters</span></div>
+        <textarea class="sp-textarea" id="sp-input" placeholder="Paste a headline or article body here..."></textarea>
+        <div class="sp-examples">
+          <button class="sp-example-btn" data-ex="0">Wire-style example</button>
+          <button class="sp-example-btn" data-ex="1">Clickbait-style example</button>
+          <button class="sp-example-btn" data-ex="2">Neutral claim (edge case)</button>
+        </div>
+        <div class="sp-analyze-row">
+          <button class="sp-analyze-btn" id="sp-analyze">Analyze Signal</button>
+        </div>
+      </div>
+
+      <div class="sp-readout">
+        <div class="sp-readout-label">Readout</div>
+        <div id="sp-result">
+          <div class="sp-verdict-empty">
+            <span class="sp-glyph">&#9673;</span>
+            Paste text and press Analyze Signal to read its stylistic fingerprint.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sp-disclaimer">
+      <b>What this actually measures:</b> word and phrase patterns (TF-IDF over unigrams/bigrams) fed into a logistic regression classifier, trained on 2016&ndash;2017 U.S. political news where REAL articles are Reuters wire copy and FAKE articles come from a handful of hyperpartisan sites. It is picking up on <b>writing register</b> (formal wire-style vs. casual/opinionated), not verifying facts. On articles from unfamiliar sources it has ~93% accuracy and can be fooled by tone alone &mdash; the "Neutral claim" example above is included on purpose to show this. Text you paste is sent to the STYLEPRINT backend running at <code id="sp-api-disclaimer"></code> for scoring &mdash; not to any third party &mdash; and is not stored.
+    </div>
+    <div class="sp-footer-note">20,000-term model &middot; logistic regression &middot; served by the STYLEPRINT API</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Point this at your running STYLEPRINT backend (see backend/README.md).
+  // Change this if you deploy the backend somewhere other than localhost.
+  // Auto-detects localhost for local dev. For production, replace the
+  // placeholder below with your deployed backend URL (e.g. Render/Railway).
+  const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const API_BASE_URL = isLocal
+    ? 'http://localhost:8000'
+    : 'https://YOUR-BACKEND-URL.onrender.com'; // <-- replace after deploying the backend
+  const apiDisclaimerEl = document.getElementById('sp-api-disclaimer');
+  if (apiDisclaimerEl) apiDisclaimerEl.textContent = API_BASE_URL;
+
+  async function analyze(text) {
+    const res = await fetch(API_BASE_URL + '/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(function() { return {}; });
+      throw new Error(err.error || ('Request failed (' + res.status + ')'));
+    }
+
+    const data = await res.json();
+    return {
+      probFake: data.probability_fake,
+      topFake: data.top_fake_terms.map(function(t) { return { term: t.term, contribution: t.contribution }; }),
+      topReal: data.top_real_terms.map(function(t) { return { term: t.term, contribution: t.contribution }; }),
+      matchedTerms: data.matched_terms
+    };
+  }
+
+  function renderLoading() {
+    document.getElementById('sp-result').innerHTML =
+      '<div class="sp-verdict-empty"><span class="sp-glyph">&#9673;</span>Analyzing&hellip;</div>';
+  }
+
+  function renderError(message) {
+    document.getElementById('sp-result').innerHTML =
+      '<div class="sp-verdict-empty"><span class="sp-glyph">&#9888;</span>' +
+      'Couldn\'t reach the STYLEPRINT backend.<br>' +
+      '<span style="opacity:.75">' + message + '</span><br><br>' +
+      'Make sure the backend is running (<code>python app.py</code>) at ' + API_BASE_URL + '.</div>';
+  }
+
+  function renderResult(res) {
+    const resultEl = document.getElementById('sp-result');
+    const pct = Math.round(res.probFake * 100);
+    const isFake = res.probFake >= 0.5;
+    const label = isFake ? 'LIKELY FAKE' : 'LIKELY REAL';
+    const confPct = isFake ? pct : (100 - pct);
+    const cls = isFake ? 'fake' : 'real';
+
+    let chipsFake = res.topFake.map(function(c) {
+      return '<span class="sp-chip">' + c.term + '</span>';
+    }).join('');
+    let chipsReal = res.topReal.map(function(c) {
+      return '<span class="sp-chip">' + c.term + '</span>';
+    }).join('');
+    if (!chipsFake) chipsFake = '<span class="sp-chip">&mdash;</span>';
+    if (!chipsReal) chipsReal = '<span class="sp-chip">&mdash;</span>';
+
+    resultEl.innerHTML =
+      '<div class="sp-verdict-word ' + cls + '">' + label + '</div>' +
+      '<div class="sp-verdict-conf">' + confPct + '% confidence &middot; ' + res.matchedTerms + ' recognized terms</div>' +
+      '<div class="sp-gauge-wrap">' +
+        '<div class="sp-gauge-labels"><span>REAL</span><span>FAKE</span></div>' +
+        '<div class="sp-gauge-track" id="sp-gauge-track"><div class="sp-needle" id="sp-needle" style="left:50%"></div></div>' +
+        '<div class="sp-gauge-ticks">' + '<span></span>'.repeat(11) + '</div>' +
+      '</div>' +
+      '<div class="sp-terms">' +
+        '<div><div class="sp-terms-col-label fake">Pulls toward FAKE</div><div class="sp-chip-list">' + chipsFake + '</div></div>' +
+        '<div><div class="sp-terms-col-label real">Pulls toward REAL</div><div class="sp-chip-list">' + chipsReal + '</div></div>' +
+      '</div>';
+
+    requestAnimationFrame(function() {
+      const needle = document.getElementById('sp-needle');
+      if (needle) needle.style.left = (res.probFake * 100) + '%';
+    });
+  }
+
+  const input = document.getElementById('sp-input');
+  const charcount = document.getElementById('charcount');
+  const analyzeBtn = document.getElementById('sp-analyze');
+
+  input.addEventListener('input', function() {
+    charcount.textContent = input.value.length + ' characters';
+  });
+
+  async function runAnalysis(text) {
+    if (!text) return;
+    analyzeBtn.disabled = true;
+    renderLoading();
+    try {
+      const res = await analyze(text);
+      renderResult(res);
+    } catch (e) {
+      renderError(e.message);
+    } finally {
+      analyzeBtn.disabled = false;
+    }
+  }
+
+  analyzeBtn.addEventListener('click', function() {
+    runAnalysis(input.value.trim());
+  });
+
+  const examples = [
+    "WASHINGTON - The Senate voted on Thursday to advance a bipartisan infrastructure package, with lawmakers from both parties citing the need for updated roads and bridges. The bill now moves to committee for further review, according to a statement from the majority leader's office.",
+    "BREAKING: You won't believe what the government doesn't want you to know about this one simple trick! Insiders reveal the shocking truth they've been hiding from the American people for years. Share before this gets taken down!",
+    "The city's new bike lane project cost more than expected, and some residents aren't happy about it. Local officials say the numbers don't add up the way they were told they would."
+  ];
+
+  document.querySelectorAll('.sp-example-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const idx = parseInt(btn.getAttribute('data-ex'), 10);
+      input.value = examples[idx];
+      charcount.textContent = input.value.length + ' characters';
+      runAnalysis(input.value);
+    });
+  });
+})();
+</script>
