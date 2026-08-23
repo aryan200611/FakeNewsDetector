@@ -72,7 +72,7 @@ Short version: push to GitHub → connect the repo on [render.com](https://rende
 1. In `frontend/styleprint.html`, find this line near the top of the
    `<script>` block:
    ```js
-   : 'https://YOUR-BACKEND-URL.onrender.com'; // <-- replace after deploying the backend
+   : 'https://fakenewsdetector-2-lf31.onrender.com'; 
    ```
    Replace it with your actual Render URL from step 1.
 2. Commit and push that change.
